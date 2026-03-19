@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫酷贪吃蛇游戏</title>
+    <link rel="stylesheet" href="css/snake_style.css">
+</head>
+<body>
+    <!-- 主菜单界面 -->
+    <div class="menu-screen" id="menuScreen">
+        <div class="menu-container">
+            <h1 class="game-title">🐍 炫酷贪吃蛇</h1>
+            <div class="menu-buttons">
+                <button class="menu-btn primary" onclick="startGame()">开始游戏</button>
+                <button class="menu-btn secondary" onclick="showSettings()">游戏设置</button>
+                <button class="menu-btn secondary" onclick="showInstructions()">游戏说明</button>
+            </div>
+            <div class="high-score-display">
+                <p>历史最高分: <span id="menuHighScore">0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏设置界面 -->
+    <div class="settings-screen" id="settingsScreen" style="display: none;">
+        <div class="settings-container">
+            <h2>游戏设置</h2>
+            <div class="setting-item">
+                <label>游戏难度:</label>
+                <select id="difficultySelect">
+                    <option value="easy">简单</option>
+                    <option value="medium" selected>中等</option>
+                    <option value="hard">困难</option>
+                    <option value="extreme">极难</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <label>游戏速度:</label>
+                <input type="range" id="speedSlider" min="1" max="10" value="5">
+                <span id="speedValue">5</span>
+            </div>
+            <div class="setting-item">
+                <label>音效开关:</label>
+                <input type="checkbox" id="soundToggle" checked>
+            </div>
+            <div class="setting-item">
+                <label>障碍物:</label>
+                <input type="checkbox" id="obstacleToggle" checked>
+            </div>
+            <button class="menu-btn primary" onclick="backToMenu()">返回菜单</button>
+        </div>
+    </div>
+
+    <!-- 游戏说明界面 -->
+    <div class="instructions-screen" id="instructionsScreen" style="display: none;">
+        <div class="instructions-container">
+            <h2>游戏说明</h2>
+            <div class="instructions-content">
+                <p>🎮 游戏目标：控制贪吃蛇吃到食物，获得高分！</p>
+                <p>⬆️ ⬇️ ⬅️ ➡️：方向键控制蛇的移动方向</p>
+                <p>⏸️ 空格键：暂停/继续游戏</p>
+                <p>🍎 红色食物：+10分</p>
+                <p>🥇 金色食物：+30分（限时10秒）</p>
+                <p>🥈 蓝色食物：+20分（限时15秒）</p>
+                <p>⚠️ 障碍物：撞到游戏结束</p>
+                <p>💡 提示：随着分数增加，蛇的速度会越来越快！</p>
+            </div>
+            <button class="menu-btn primary" onclick="backToMenu()">返回菜单</button>
+        </div>
+    </div>
+
+    <!-- 游戏主界面 -->
+    <div class="game-screen" id="gameScreen" style="display: none;">
+        <div class="game-header">
+            <div class="score-board">
+                <div class="score-item">
+                    <span class="score-label">分数</span>
+                    <span class="score-value" id="score">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">最高分</span>
+                    <span class="score-value" id="highScore">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">关卡</span>
+                    <span class="score-value" id="level">1</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="control-btn" onclick="togglePause()">⏸️</button>
+                <button class="control-btn" onclick="backToMenu()">🏠</button>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <canvas id="gameCanvas" width="600" height="600"></canvas>
+
+            <!-- 食物倒计时提示 -->
+            <div class="food-timer" id="foodTimer" style="display: none;">
+                <span id="timerText">10</span>s
+            </div>
+        </div>
+
+        <div class="mobile-controls" id="mobileControls">
+            <div class="control-row">
+                <button class="dir-btn" data-dir="up">⬆️</button>
+            </div>
+            <div class="control-row">
+                <button class="dir-btn" data-dir="left">⬅️</button>
+                <button class="dir-btn" data-dir="down">⬇️</button>
+                <button class="dir-btn" data-dir="right">➡️</button>
+            </div>
+            <button class="pause-btn" onclick="togglePause()">⏸️ 暂停</button>
+        </div>
+    </div>
+
+    <!-- 暂停界面 -->
+    <div class="pause-overlay" id="pauseOverlay" style="display: none;">
+        <div class="pause-menu">
+            <h2>游戏暂停</h2>
+            <button class="menu-btn primary" onclick="resumeGame()">继续游戏</button>
+            <button class="menu-btn secondary" onclick="restartGame()">重新开始</button>
+            <button class="menu-btn secondary" onclick="backToMenu()">返回菜单</button>
+        </div>
+    </div>
+
+    <!-- 游戏结束界面 -->
+    <div class="game-over" id="gameOver" style="display: none;">
+        <div class="game-over-content">
+            <h2>游戏结束!</h2>
+            <div class="final-stats">
+                <p>最终分数: <span id="finalScore">0</span></p>
+                <p>达到关卡: <span id="finalLevel">1</span></p>
+                <p id="newRecord" style="display: none; color: #ffd700;">🎉 新纪录! 🎉</p>
+            </div>
+            <div class="game-over-buttons">
+                <button class="menu-btn primary" onclick="restartGame()">再来一局</button>
+                <button class="menu-btn secondary" onclick="backToMenu()">返回菜单</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载界面 -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>正在加载游戏...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript模块 -->
+    <script type="module">
+        import { GameEngine } from './js/gameEngine.js';
+        import { Snake, InputHandler } from './js/snake.js';
+        import { FoodSystem } from './js/foodSystem.js';
+        import { ObstacleSystem } from './js/obstacleSystem.js';
+        import { Renderer } from './js/renderer.js';
+        import { AudioManager } from './js/audioManager.js';
+        import { StorageManager } from './js/storageManager.js';
+
+        // 这些类现在可以在全局范围内使用
+        console.log('所有模块加载完成');
+    </script>
+    <script src="./js/main.js"></script>
+</body>
+</html>

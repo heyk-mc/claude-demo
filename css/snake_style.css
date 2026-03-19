@@ -1,0 +1,460 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* 屏幕容器 */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+/* 主菜单界面 */
+.menu-screen {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    z-index: 100;
+}
+
+.menu-container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+}
+
+.game-title {
+    color: white;
+    font-size: 4em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); }
+    to { text-shadow: 2px 2px 12px rgba(255, 255, 255, 0.3); }
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.menu-btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.menu-btn.primary {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.menu-btn.secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    backdrop-filter: blur(5px);
+}
+
+.menu-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.high-score-display {
+    color: white;
+    font-size: 1.2em;
+}
+
+.high-score-display span {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+/* 设置界面 */
+.settings-screen, .instructions-screen {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    z-index: 90;
+}
+
+.settings-container, .instructions-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    color: white;
+}
+
+.settings-container h2, .instructions-container h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.setting-item {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.setting-item label {
+    font-size: 1.1em;
+}
+
+.setting-item select,
+.setting-item input[type="range"],
+.setting-item input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+.setting-item select {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* 游戏界面 */
+.game-screen {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    width: 100%;
+    height: 100%;
+    z-index: 80;
+}
+
+.game-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.score-board {
+    display: flex;
+    gap: 30px;
+}
+
+.score-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    text-align: center;
+}
+
+.score-label {
+    display: block;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.score-value {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.game-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.game-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#gameCanvas {
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    background: #000;
+}
+
+/* 食物倒计时 */
+.food-timer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* 移动端控制 */
+.mobile-controls {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-row {
+    display: flex;
+    gap: 10px;
+}
+
+.dir-btn {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+.dir-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.pause-btn {
+    margin-top: 10px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+/* 暂停界面 */
+.pause-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 110;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pause-menu {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.pause-menu h2 {
+    color: white;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+/* 游戏结束界面 */
+.game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 120;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-over-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    color: white;
+}
+
+.game-over-content h2 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #ff6b6b;
+}
+
+.final-stats {
+    margin-bottom: 30px;
+}
+
+.final-stats p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.game-over-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* 加载界面 */
+.loading-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2.5em;
+    }
+
+    #gameCanvas {
+        width: 90vw;
+        height: 90vw;
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
+
+    .game-controls {
+        display: none;
+    }
+
+    .score-board {
+        gap: 15px;
+    }
+
+    .score-item {
+        padding: 8px 15px;
+    }
+
+    .score-value {
+        font-size: 1.2em;
+    }
+
+    .game-header {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-container {
+        padding: 30px 20px;
+    }
+
+    .game-title {
+        font-size: 2em;
+    }
+
+    .menu-btn {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+
+    .dir-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2em;
+    }
+}
